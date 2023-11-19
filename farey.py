@@ -34,25 +34,22 @@ fside = (0, 0)
 
 # Iterate through Farey sequence until the error is smaller than the precision, ie. error < 1/(10**precision)
 with yaspin(text="Calculating", color="yellow") as spinner:
-    while True:
+    while True and precision >= 0 and decimal >= 0:
+
+        # Calculate mediant
         med = mediant(left, right)
+
+        # Check if median is close enough to the decimal
+        error = np.abs((med[0] / med[1]) - float(f"0.{decimal}"))
+        if error < 1/(10**precision):
+            fside = med
+            break
+
+        # Else update left and right
         if med[0] / med[1] < float(f"0.{decimal}"):
             left = med
         else:
             right = med
 
-        if precision == 0 or decimal == 0:
-            break
-        else:
-            # Check if left or right side are close enough to the decimal
-            for side in [left, right]:
-                error = np.abs((side[0] / side[1]) - float(f"0.{decimal}"))
-                if error < 1/(10**precision):
-                    fside = side
-                    break
 
-            # Break if a side is found
-            if fside != (0, 0):
-                break
-
-print(colored("\nApproximately: ", "light_grey") +  colored(f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n", "green"))
+print(colored("\nApproximately: ", "light_grey") +  colored(f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/fside[1]}\n", "green"))
