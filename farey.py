@@ -9,6 +9,7 @@ args = sys.argv[1:]
 precision = int(args[0])
 input_num = args[1]
 
+# Check if input number is a special number or a number with a special operation
 special_ops = ["sqrt", "log", "log2", "ln", "sin", "cos", "tan"]
 if args[1] == "pi":
     input_num = str(np.pi)
