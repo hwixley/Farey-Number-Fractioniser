@@ -1,7 +1,7 @@
 # Fraction-Rationaliser
 Turning rational numbers into rational fractional forms using concepts from the Farey algorithm.Turning rational numbers into rational fractional forms using concepts from the Farey algorithm.
 
-![pi-output](https://github.com/hwixley/Fraction-Rationaliser/assets/57837950/4c851fbc-e9c0-4fe8-bb47-08aa11f5fa82)
+![pi-updated-output](https://github.com/hwixley/Fraction-Rationaliser/assets/57837950/a80f2a3f-c3a0-47fa-984d-39959987b05a)
 
 <hr>
 
