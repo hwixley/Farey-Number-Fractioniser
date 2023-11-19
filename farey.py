@@ -41,12 +41,13 @@ decimal = 0
 if len(num_str) > 1:
     decimal = float(num_str[1])
 
-print("\n" + "-"*20)
+seps = "-"*30
+print("\n" + seps)
 print(colored("INPUTS", "light_grey"))
-print("-"*20)
+print(seps)
 print(colored("Precision: ", "light_grey") + colored(f"{precision}", "blue"))
 print(colored("Number: ", "light_grey") + colored(f"{input_num}", "blue"))
-print("-"*20 + "\n")
+print(seps + "\n")
 
 # Farey sequence
 def mediant(a, b):
@@ -90,14 +91,15 @@ with yaspin(text="Calculating", color="yellow") as spinner:
             b = str(int(decimal))[:precision]
             if a == b or (len(b) < len(a) and a.startswith(b)):
                 spinner.ok("✅ ")
-                print("\n" + "-"*20)
+                print("\n" + seps)
                 print(colored("FINAL FAREY SEQUENCE", "light_grey"))
-                print("-"*20)
+                print(seps)
                 print(colored("Left: ", "light_grey") + colored(f"{left}", "blue"))
                 print(colored("Right: ", "light_grey") + colored(f"{right}", "blue"))
+                print(seps)
                 print(colored("Final side: ", "light_grey") + colored(f"{fside}", "red"))
                 print(colored("Error: ", "light_grey") + colored(f"{np.min(errors)}", "yellow"))
-                print("-"*20)
+                print(seps)
                 break
 
 print(colored("\nApproximately: ", "light_grey") +  colored(f"{int(fside[0] + num * fside[1])}/{int(fside[1])} ≈ {(fside[0] + num * fside[1])/fside[1]}\n", "green"))
