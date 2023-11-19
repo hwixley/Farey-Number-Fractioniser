@@ -55,4 +55,4 @@ with yaspin(text="Calculating", color="yellow") as spinner:
             if fside != (0, 0):
                 break
 
-print(colored("\nApproximately:", "green") +  f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n")
+print(colored("\nApproximately: ", "light_grey") +  colored(f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n", "green"))
