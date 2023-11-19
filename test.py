@@ -4,18 +4,34 @@ import numpy as np
 
 args = sys.argv[1:]
 
+# Parse arguments
 precision = int(args[0])
-num_str = args[1].split(".")
+input_num = args[1]
+if args[1] == "pi":
+    input_num = str(np.pi)
+elif args[1] == "e":
+    input_num = str(np.e)
+elif args[1] == "phi":
+    input_num = str((1 + np.sqrt(5))/2)
+elif args[1].startswith("sqrt") and args[1][4:].isdigit():
+    input_num = str(np.sqrt(int(args[1][4:])))
+
+
+# Parse input number
+num_str = input_num.split(".")
 num = int(num_str[0])
 decimal = int(num_str[1])
 
-left = (0, 1)
-right = (1, 1)
-
+# Farey sequence
 def mediant(a, b):
     return (a[0] + b[0], a[1] + b[1])
 
+# Setup left and right, and found vars for Farey sequence
+left = (0, 1)
+right = (1, 1)
+fside = (0, 0)
 
+# Iterate through Farey sequence until the error is smaller than the precision, ie. error < 1/(10**precision)
 with yaspin(text="Calculating", color="yellow") as spinner:
     while True:
         med = mediant(left, right)
@@ -24,21 +40,18 @@ with yaspin(text="Calculating", color="yellow") as spinner:
         else:
             right = med
 
-        print((med[0] / med[1]) - float(f"0.{decimal}"))
-        print(f"Calculating {med[0]}/{med[1]}")
-
-        print("")
-
-        if precision == 0:
+        if precision == 0 or decimal == 0:
             break
         else:
-            a = str(med[0] / med[1])[2:2+precision]
-            b = str(decimal)[:precision]
-            min_len = np.min([len(a), len(b)])
-            # print(a, b, min_len)
-            if a == b or (len(b) < len(a) and a[:min_len] == b[:min_len]):
+            # Check if left or right side are close enough to the decimal
+            for side in [left, right]:
+                error = np.abs((side[0] / side[1]) - float(f"0.{decimal}"))
+                if error < 1/(10**precision):
+                    fside = side
+                    break
+
+            # Break if a side is found
+            if fside != (0, 0):
                 break
 
-        
-
-print(f"{int(num)} + {med[0]}/{med[1]} \t OR \t {med[0] + int(num) * med[1]}/{med[1]}")
+print(f"\nApproximately: {fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n")
