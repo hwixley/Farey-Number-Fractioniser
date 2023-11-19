@@ -1,6 +1,7 @@
 import sys
 from yaspin import yaspin
 import numpy as np
+from termcolor import colored
 
 args = sys.argv[1:]
 
@@ -54,4 +55,4 @@ with yaspin(text="Calculating", color="yellow") as spinner:
             if fside != (0, 0):
                 break
 
-print(f"\nApproximately: {fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n")
+print(colored("\nApproximately:", "green") +  f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/side[1]}\n")
