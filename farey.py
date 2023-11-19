@@ -8,15 +8,23 @@ args = sys.argv[1:]
 # Parse arguments
 precision = int(args[0])
 input_num = args[1]
+
+special_ops = ["sqrt", "log", "log2", "ln", "sin", "cos", "tan"]
 if args[1] == "pi":
     input_num = str(np.pi)
 elif args[1] == "e":
     input_num = str(np.e)
 elif args[1] == "phi":
     input_num = str((1 + np.sqrt(5))/2)
-elif args[1].startswith("sqrt") and args[1][4:].isdigit():
-    input_num = str(np.sqrt(int(args[1][4:])))
-
+else:
+    for op in special_ops:
+        if args[1].startswith(op + "[") and args[1].endswith("]"):
+            if args[1][len(op)+1:-1].isdigit() or (args[1][len(op)+1] == "-" and args[1][len(op) + 2:-1].isdigit()):
+                input_num = str(eval(f"np.{op}({args[1][len(op)+1:-1]})"))
+                break
+            else:
+                print(colored(f"Invalid input number '{args[1]}'", "red"))
+                sys.exit(1)
 
 # Parse input number
 num_str = input_num.split(".")

@@ -25,4 +25,5 @@ python3 farey.py <precision> <rational-number>
 
 - `<precision>` - an integer value, this denotes the precision of the fraction to the specified number of decimal places
 - `<rational-number>` - a rational number in the form of a floating point or string special value, this denotes the number you are generating a fraction for
-  - <b>Special Values:</b> `pi`, `e`, `phi`, `sqrt<num>`
+  - <b>Special Values:</b> `pi`, `e`, `phi`
+  - <b>Special Funcs:</b> `sqrt[<num>]`, `log[<num>]`, `log2[<num>]`, `ln[<num>]`, `sin[<num>]`, `cos[<num>]`, `tan[<num>]`
