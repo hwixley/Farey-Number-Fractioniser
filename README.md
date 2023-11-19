@@ -22,11 +22,13 @@ python3 farey.py <precision> <rational-number>
 
 # Inputs
 The script currently has a strict order of non-optional inputs:
-`python3 farey.py <precision> <rational-number>`
+```
+python3 farey.py <precision> <rational-number>
+```
 
-*This will be updated in future to use dynamic input flags (ie. `-p <precision>`)
+__*This will be updated in future to use dynamic input flags (ie. `-p <precision>`)__
 
 - `<precision>` - an integer value, this denotes the precision of the fraction to the specified number of decimal places
 - `<rational-number>` - a rational number in the form of a floating point or string special value, this denotes the number you are generating a fraction for
-  - <b>Special Values:</b> `pi`, `e`, `phi`
-  - <b>Special Funcs:</b> `sqrt[<num>]`, `log[<num>]`, `log2[<num>]`, `ln[<num>]`, `sin[<num>]`, `cos[<num>]`, `tan[<num>]`
+  - <u>Special Values:</u> `pi`, `e`, `phi`
+  - <u>Special Funcs:</u> `sqrt[<num>]`, `log[<num>]`, `log2[<num>]`, `ln[<num>]`, `sin[<num>]`, `cos[<num>]`, `tan[<num>]`
