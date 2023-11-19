@@ -6,17 +6,24 @@ from termcolor import colored
 args = sys.argv[1:]
 
 # Parse arguments
+if len(args) != 2:
+    print(colored("Invalid number of arguments", "red"))
+    sys.exit(1)
+
+elif not args[0].isdigit():
+    print(colored(f"Invalid precision '{args[0]}'", "red"))
+    sys.exit(1)
+
+# if not args[1].replace(".", "", 1).isdigit() and not args[1] in ["pi", "e", "phi"]:
+
 precision = int(args[0])
 input_num = args[1]
 
 # Check if input number is a special number or a number with a special operation
+special_vals = ["pi", "e", "euler_gamma", "nan", "inf", "NINF", "PINF"]
 special_ops = ["sqrt", "log", "log2", "ln", "sin", "cos", "tan"]
-if args[1] == "pi":
-    input_num = str(np.pi)
-elif args[1] == "e":
-    input_num = str(np.e)
-elif args[1] == "phi":
-    input_num = str((1 + np.sqrt(5))/2)
+if args[1] in special_vals:
+    input_num = str(eval(f"np.{args[1]}"))
 else:
     for op in special_ops:
         if args[1].startswith(op + "[") and args[1].endswith("]"):
@@ -29,12 +36,24 @@ else:
 
 # Parse input number
 num_str = input_num.split(".")
-num = int(num_str[0])
-decimal = int(num_str[1])
+num = float(num_str[0])
+decimal = 0
+if len(num_str) > 1:
+    decimal = float(num_str[1])
+
+print("\n" + "-"*20)
+print(colored("INPUTS", "light_grey"))
+print("-"*20)
+print(colored("Precision: ", "light_grey") + colored(f"{precision}", "blue"))
+print(colored("Number: ", "light_grey") + colored(f"{input_num}", "blue"))
+print("-"*20 + "\n")
 
 # Farey sequence
 def mediant(a, b):
     return (a[0] + b[0], a[1] + b[1])
+
+def get_precision():
+    return 1/(10**(precision))
 
 # Setup left and right, and found vars for Farey sequence
 left = (0, 1)
@@ -47,18 +66,38 @@ with yaspin(text="Calculating", color="yellow") as spinner:
 
         # Calculate mediant
         med = mediant(left, right)
-
-        # Check if mediant is close enough to the decimal
-        error = np.abs((med[0] / med[1]) - float(f"0.{decimal}"))
-        if error < 1/(10**precision):
-            fside = med
-            break
-
-        # Else update left and right
-        if med[0] / med[1] < float(f"0.{decimal}"):
+    
+        # update left and right
+        if med[0] / med[1] < float(f"0.{int(decimal)}"):
             left = med
         else:
             right = med
 
+        # Check if mediant is close enough to the decimal
+        errors = []
+        for side in [left, right]:
+            error = np.abs((side[0] / side[1]) - float(f"0.{int(decimal)}"))
+            if error < get_precision():
+                errors.append(error)
+            else:
+                errors.append(np.inf)
+        
+        # If the error is smaller than the precision check if the closest side is valid, if so break
+        if np.min(errors) < get_precision():
+            fside = [left, right][np.argmin(errors)]
+            
+            a = str(fside[0]/fside[1]).split(".")[1][:precision]
+            b = str(int(decimal))[:precision]
+            if a == b or (len(b) < len(a) and a.startswith(b)):
+                spinner.ok("✅ ")
+                print("\n" + "-"*20)
+                print(colored("FINAL FAREY SEQUENCE", "light_grey"))
+                print("-"*20)
+                print(colored("Left: ", "light_grey") + colored(f"{left}", "blue"))
+                print(colored("Right: ", "light_grey") + colored(f"{right}", "blue"))
+                print(colored("Final side: ", "light_grey") + colored(f"{fside}", "red"))
+                print(colored("Error: ", "light_grey") + colored(f"{np.min(errors)}", "yellow"))
+                print("-"*20)
+                break
 
-print(colored("\nApproximately: ", "light_grey") +  colored(f"{fside[0] + int(num) * fside[1]}/{fside[1]} ≈ {(fside[0] + int(num) * fside[1])/fside[1]}\n", "green"))
+print(colored("\nApproximately: ", "light_grey") +  colored(f"{int(fside[0] + num * fside[1])}/{int(fside[1])} ≈ {(fside[0] + num * fside[1])/fside[1]}\n", "green"))
