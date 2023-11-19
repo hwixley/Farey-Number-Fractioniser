@@ -9,7 +9,7 @@ Turning rational numbers (or finite estimations of irrational numbers, ie. `np.p
 
 1. Clone the repository
 ```
-git clone git@github.com:hwixley/Fraction-Rationaliser.git
+git clone git@github.com:hwixley/Farey-Number-Fractioniser.git
 ```
 2. Install the requirements
 ```
