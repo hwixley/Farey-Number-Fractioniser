@@ -97,7 +97,7 @@ with yaspin(text="Calculating", color="yellow") as spinner:
                 print(colored("Left: ", "light_grey") + colored(f"{left}", "blue"))
                 print(colored("Right: ", "light_grey") + colored(f"{right}", "blue"))
                 print(seps)
-                print(colored("Final side: ", "light_grey") + colored(f"{fside}", "red"))
+                print(colored("Final side: ", "light_grey") + colored(f"{fside}", "cyan"))
                 print(colored("Error: ", "light_grey") + colored(f"{np.min(errors)}", "yellow"))
                 print(seps)
                 break
