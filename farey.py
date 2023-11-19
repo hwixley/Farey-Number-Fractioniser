@@ -39,7 +39,7 @@ with yaspin(text="Calculating", color="yellow") as spinner:
         # Calculate mediant
         med = mediant(left, right)
 
-        # Check if median is close enough to the decimal
+        # Check if mediant is close enough to the decimal
         error = np.abs((med[0] / med[1]) - float(f"0.{decimal}"))
         if error < 1/(10**precision):
             fside = med
